@@ -17,7 +17,7 @@ sys.dont_write_bytecode = True
 default_args = {
  'owner': 'Sebastian Maurice',   # <<< *** Change as needed
  'pgptcontainername' : 'maadsdocker/tml-privategpt-with-gpu-nvidia-amd64', #'maadsdocker/tml-privategpt-no-gpu-amd64',  # enter a valid container https://hub.docker.com/r/maadsdocker/tml-privategpt-no-gpu-amd64
- 'rollbackoffset' : '2',  # <<< *** Change as needed
+ 'rollbackoffset' : '50',  # <<< *** Change as needed
  'offset' : '-1', # leave as is
  'enabletls' : '1', # change as needed
  'brokerhost' : '', # <<< *** Leave as is
@@ -27,7 +27,7 @@ default_args = {
  'delay' : '100', # change as needed
  'companyname' : 'otics',  # <<< *** Change as needed
  'consumerid' : 'streamtopic',  # <<< *** Leave as is
- 'consumefrom' : 'iot-preprocess',    # <<< *** Change as needed
+ 'consumefrom' : 'cisco-network-preprocess',    # <<< *** Change as needed
  'pgpt_data_topic' : 'cisco-network-privategpt',
  'producerid' : 'private-gpt',   # <<< *** Leave as is
  'identifier' : 'This is analysing TML output with privategpt',
@@ -35,22 +35,20 @@ default_args = {
  'pgptport' : '8001', # PrivateGPT listening on this port
  'preprocesstype' : '', # Leave as is 
  'partition' : '-1', # Leave as is 
- 'prompt': 'Do the device data show any malfunction or defects?', # Enter your prompt here
- 'context' : 'This is IoT data from devices. The data are \
-anomaly probabilities for each IoT device. If voltage or current \
-probabilities are low, it is likely the device is not working properly.', # what is this data about? Provide context to PrivateGPT
+ 'prompt': 'Do any of the values of the inbound or outbound packets look abnormal?', # Enter your prompt here
+ 'context' : 'These data are anomaly probabilities of suspicious data traffic.  A high probability of over 0.80 is likely suspicious.', # what is this data about? Provide context to PrivateGPT
  'jsonkeytogather' : 'hyperprediction', # enter key you want to gather data from to analyse with PrivateGpt i.e. Identifier or hyperprediction
- 'keyattribute' : 'Voltage,current', # change as needed  
- 'keyprocesstype' : 'anomprob',  # change as needed
+ 'keyattribute' : 'outboundpackets,inboundpackets', # change as needed  
+ 'keyprocesstype' : 'AnomProb',  # change as needed
  'hyperbatch' : '0', # Set to 1 if you want to batch all of the hyperpredictions and sent to chatgpt, set to 0, if you want to send it one by one   
  'vectordbcollectionname' : 'tml', # change as needed
- 'concurrency' : '1', # change as needed Leave at 1
+ 'concurrency' : '1', # change as needed 
  'CUDA_VISIBLE_DEVICES' : '0' # change as needed
 }
 
 ############################################################### DO NOT MODIFY BELOW ####################################################
 # Instantiate your DAG
-@dag(dag_id="tml_system_step_9_privategpt_qdrant_dag", default_args=default_args, tags=["tml_system_step_9_privategpt_qdrant_dag"], schedule=None,  catchup=False)
+@dag(dag_id="tml_system_step_9_privategpt_qdrant_dag_cybersecuritywithprivategpt-4c74", default_args=default_args, tags=["tml_system_step_9_privategpt_qdrant_dag_cybersecuritywithprivategpt-4c74"], schedule=None,  catchup=False)
 def startaiprocess():
     # Define tasks
     def empty():
@@ -86,24 +84,18 @@ def startpgptcontainer():
       stopcontainers()
 #      buf="docker stop $(docker ps -q --filter ancestor={} )".format(pgptcontainername)
  #     subprocess.call(buf, shell=True)
-      time.sleep(10)
-      if '-no-gpu-' in pgptcontainername:
-        buf = "docker run -d -p {}:{} --net=host --env PORT={} --env GPU=0 --env COLLECTION={} --env WEB_CONCURRENCY={} --env CUDA_VISIBLE_DEVICES={} {}".format(pgptport,pgptport,pgptport,collection,concurrency,cuda,pgptcontainername)       
-      else: 
-        buf = "docker run -d -p {}:{} --net=host --gpus all --env PORT={} --env GPU=1 --env COLLECTION={} --env WEB_CONCURRENCY={} --env CUDA_VISIBLE_DEVICES={} {}".format(pgptport,pgptport,pgptport,collection,concurrency,cuda,pgptcontainername)
-      v=subprocess.call(buf, shell=True)
-      return v,buf
- 
+      time.sleep(4)
+      buf = "docker run -d -p {}:{} --net=host --gpus all --env PORT={} --env GPU=1 --env COLLECTION={} --env WEB_CONCURRENCY={} --env CUDA_VISIBLE_DEVICES={} {}".format(pgptport,pgptport,pgptport,collection,concurrency,cuda,pgptcontainername)
+      subprocess.call(buf, shell=True)
+
 def qdrantcontainer():
-    v=0
-    buf=""
+
     if int(default_args['concurrency']) > 1:
       buf="docker stop $(docker ps -q --filter ancestor=qdrant/qdrant )"
       subprocess.call(buf, shell=True)
       time.sleep(4)
       buf = "docker run -d -p 6333:6333 -v $(pwd)/qdrant_storage:/qdrant/storage:z qdrant/qdrant"
-      v=subprocess.call(buf, shell=True)
-    return v,buf
+      subprocess.call(buf, shell=True)
 
 def pgptchat(prompt,context,docfilter,port,includesources,ip,endpoint):
 
@@ -355,19 +347,8 @@ if __name__ == '__main__':
         VIPERPORT = sys.argv[4]
 
         tsslogging.locallogs("INFO", "STEP 9: Starting privateGPT")
-        v,buf=startpgptcontainer()
-        if v==1:
-          tsslogging.locallogs("WARN", "STEP 9: There seems to be an issue starting the privateGPT container.  Here is the run command - try to run it nanually for testing: {}".format(buf))
-        else:
-          tsslogging.locallogs("INFO", "STEP 9: Success starting privateGPT.  Here is the run command: {}".format(buf))
-         
-        v,buf=qdrantcontainer()
-        if buf != "":
-         if v==1:
-          tsslogging.locallogs("WARN", "STEP 9: There seems to be an issue starting the Qdrant container.  Here is the run command - try to run it nanually for testing: {}".format(buf))
-         else:
-          tsslogging.locallogs("INFO", "STEP 9: Success starting Qdrant.  Here is the run command: {}".format(buf))
-        
+        startpgptcontainer()
+        qdrantcontainer()
         time.sleep(10)  # wait for containers to start
 
         while True:

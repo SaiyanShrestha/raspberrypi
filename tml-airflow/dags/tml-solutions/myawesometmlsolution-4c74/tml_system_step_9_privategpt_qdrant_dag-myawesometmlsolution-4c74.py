@@ -50,7 +50,7 @@ probabilities are low, it is likely the device is not working properly.', # what
 
 ############################################################### DO NOT MODIFY BELOW ####################################################
 # Instantiate your DAG
-@dag(dag_id="tml_system_step_9_privategpt_qdrant_dag", default_args=default_args, tags=["tml_system_step_9_privategpt_qdrant_dag"], schedule=None,  catchup=False)
+@dag(dag_id="tml_system_step_9_privategpt_qdrant_dag_myawesometmlsolution-4c74", default_args=default_args, tags=["tml_system_step_9_privategpt_qdrant_dag_myawesometmlsolution-4c74"], schedule=None,  catchup=False)
 def startaiprocess():
     # Define tasks
     def empty():
@@ -86,24 +86,18 @@ def startpgptcontainer():
       stopcontainers()
 #      buf="docker stop $(docker ps -q --filter ancestor={} )".format(pgptcontainername)
  #     subprocess.call(buf, shell=True)
-      time.sleep(10)
-      if '-no-gpu-' in pgptcontainername:
-        buf = "docker run -d -p {}:{} --net=host --env PORT={} --env GPU=0 --env COLLECTION={} --env WEB_CONCURRENCY={} --env CUDA_VISIBLE_DEVICES={} {}".format(pgptport,pgptport,pgptport,collection,concurrency,cuda,pgptcontainername)       
-      else: 
-        buf = "docker run -d -p {}:{} --net=host --gpus all --env PORT={} --env GPU=1 --env COLLECTION={} --env WEB_CONCURRENCY={} --env CUDA_VISIBLE_DEVICES={} {}".format(pgptport,pgptport,pgptport,collection,concurrency,cuda,pgptcontainername)
-      v=subprocess.call(buf, shell=True)
-      return v,buf
- 
+      time.sleep(4)
+      buf = "docker run -d -p {}:{} --net=host --gpus all --env PORT={} --env GPU=1 --env COLLECTION={} --env WEB_CONCURRENCY={} --env CUDA_VISIBLE_DEVICES={} {}".format(pgptport,pgptport,pgptport,collection,concurrency,cuda,pgptcontainername)
+      subprocess.call(buf, shell=True)
+
 def qdrantcontainer():
-    v=0
-    buf=""
+
     if int(default_args['concurrency']) > 1:
       buf="docker stop $(docker ps -q --filter ancestor=qdrant/qdrant )"
       subprocess.call(buf, shell=True)
       time.sleep(4)
       buf = "docker run -d -p 6333:6333 -v $(pwd)/qdrant_storage:/qdrant/storage:z qdrant/qdrant"
-      v=subprocess.call(buf, shell=True)
-    return v,buf
+      subprocess.call(buf, shell=True)
 
 def pgptchat(prompt,context,docfilter,port,includesources,ip,endpoint):
 
@@ -355,19 +349,8 @@ if __name__ == '__main__':
         VIPERPORT = sys.argv[4]
 
         tsslogging.locallogs("INFO", "STEP 9: Starting privateGPT")
-        v,buf=startpgptcontainer()
-        if v==1:
-          tsslogging.locallogs("WARN", "STEP 9: There seems to be an issue starting the privateGPT container.  Here is the run command - try to run it nanually for testing: {}".format(buf))
-        else:
-          tsslogging.locallogs("INFO", "STEP 9: Success starting privateGPT.  Here is the run command: {}".format(buf))
-         
-        v,buf=qdrantcontainer()
-        if buf != "":
-         if v==1:
-          tsslogging.locallogs("WARN", "STEP 9: There seems to be an issue starting the Qdrant container.  Here is the run command - try to run it nanually for testing: {}".format(buf))
-         else:
-          tsslogging.locallogs("INFO", "STEP 9: Success starting Qdrant.  Here is the run command: {}".format(buf))
-        
+        startpgptcontainer()
+        qdrantcontainer()
         time.sleep(10)  # wait for containers to start
 
         while True:
