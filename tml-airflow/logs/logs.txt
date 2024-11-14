@@ -12248,3 +12248,4 @@ origin	https://<personal access token hidden>@github.com/saiyanshrestha/raspberr
 [INFO 2024-11-14_20:58:04] Deleting topic cisco-network-preprocess in tml_system_step_2_kafka_createtopic_dag-tssprojecttest1version1-4c74.py
 [INFO 2024-11-14_20:58:09] Deleting topic ml-data in tml_system_step_2_kafka_createtopic_dag-tssprojecttest1version1-4c74.py
 [INFO 2024-11-14_20:58:14] Deleting topic prediction-data in tml_system_step_2_kafka_createtopic_dag-tssprojecttest1version1-4c74.py
+[INFO 2024-11-14_20:58:20] Deleting topic cisco-network-privategpt in tml_system_step_2_kafka_createtopic_dag-tssprojecttest1version1-4c74.py
