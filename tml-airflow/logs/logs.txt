@@ -12303,3 +12303,4 @@ origin	https://<personal access token hidden>@github.com/saiyanshrestha/raspberr
 [INFO 2024-11-15_02:10:47] Preprocessing DAG in tml_system_step_4_kafka_preprocess_dag-tssprojecttest1version1-4c74.py
 [INFO 2024-11-15_02:10:50] Visualization DAG in tml_system_step_7_kafka_visualization_dag-tssprojecttest1version1-4c74.py
 [INFO 2024-11-15_02:11:04] PrivateGPT Step 9 DAG in tml_system_step_9_privategpt_qdrant_dag-tssprojecttest1version1-4c74.py
+[INFO 2024-11-15_02:11:12] Docker DAG in tml_system_step_8_deploy_solution_to_docker_dag-tssprojecttest1version1-4c74.py
