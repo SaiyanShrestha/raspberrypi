@@ -12397,3 +12397,4 @@ origin	https://<personal access token hidden>@github.com/saiyanshrestha/raspberr
 [INFO 2024-11-15_18:00:14] Deleting topic cisco-network-privategpt in tml_system_step_2_kafka_createtopic_dag-tssprojecttest1version1-4c74.py
 [INFO 2024-11-15_18:00:30] MQTT producing DAG in tml_read_MQTT_step_3_kafka_producetotopic_dag-tssprojecttest1version1-4c74.py
 [INFO 2024-11-15_18:00:37] Preprocessing DAG in tml_system_step_4_kafka_preprocess_dag-tssprojecttest1version1-4c74.py
+[INFO 2024-11-15_18:00:40] Visualization DAG in tml_system_step_7_kafka_visualization_dag-tssprojecttest1version1-4c74.py
