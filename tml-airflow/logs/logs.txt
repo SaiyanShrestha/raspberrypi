@@ -12355,3 +12355,4 @@ origin	https://<personal access token hidden>@github.com/saiyanshrestha/raspberr
 [INFO 2024-11-15_17:16:16] PrivateGPT Step 9 DAG in tml_system_step_9_privategpt_qdrant_dag-tssprojecttest1version1-4c74.py
 [INFO 2024-11-15_17:16:28] Docker DAG in tml_system_step_8_deploy_solution_to_docker_dag-tssprojecttest1version1-4c74.py
 [INFO 2024-11-15_17:17:40] {'name': ['Project with slug "tssprojecttest1version1-4c74" already exists.']}
+[INFO 2024-11-15_17:25:05] Deleting topic cisco-network-mainstream in tml_system_step_2_kafka_createtopic_dag-tssprojecttest1version1-4c74.py
