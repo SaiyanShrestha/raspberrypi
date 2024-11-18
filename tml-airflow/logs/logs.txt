@@ -12448,3 +12448,4 @@ origin	https://<personal access token hidden>@github.com/saiyanshrestha/raspberr
 [INFO 2024-11-18_18:23:25] Visualization DAG in tml_system_step_7_kafka_visualization_dag-tssprojecttest1version1-4c74.py
 [INFO 2024-11-18_18:23:38] PrivateGPT Step 9 DAG in tml_system_step_9_privategpt_qdrant_dag-tssprojecttest1version1-4c74.py
 [INFO 2024-11-18_18:23:46] Docker DAG in tml_system_step_8_deploy_solution_to_docker_dag-tssprojecttest1version1-4c74.py
+[INFO 2024-11-18_18:25:01] {'name': ['Project with slug "tssprojecttest1version1-4c74" already exists.']}
