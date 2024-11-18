@@ -12422,3 +12422,4 @@ origin	https://<personal access token hidden>@github.com/saiyanshrestha/raspberr
 [INFO 2024-11-18_01:16:59] MQTT producing DAG in tml_read_MQTT_step_3_kafka_producetotopic_dag-tssprojecttest1version1-4c74.py
 [INFO 2024-11-18_01:17:06] Preprocessing DAG in tml_system_step_4_kafka_preprocess_dag-tssprojecttest1version1-4c74.py
 [INFO 2024-11-18_01:17:09] Visualization DAG in tml_system_step_7_kafka_visualization_dag-tssprojecttest1version1-4c74.py
+[INFO 2024-11-18_01:17:22] PrivateGPT Step 9 DAG in tml_system_step_9_privategpt_qdrant_dag-tssprojecttest1version1-4c74.py
