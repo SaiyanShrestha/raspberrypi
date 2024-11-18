@@ -12449,3 +12449,16 @@ origin	https://<personal access token hidden>@github.com/saiyanshrestha/raspberr
 [INFO 2024-11-18_18:23:38] PrivateGPT Step 9 DAG in tml_system_step_9_privategpt_qdrant_dag-tssprojecttest1version1-4c74.py
 [INFO 2024-11-18_18:23:46] Docker DAG in tml_system_step_8_deploy_solution_to_docker_dag-tssprojecttest1version1-4c74.py
 [INFO 2024-11-18_18:25:01] {'name': ['Project with slug "tssprojecttest1version1-4c74" already exists.']}
+[INFO 2024-11-18_19:29:17] TML Solution Studio Started: DOCKERUSERNAME=saiyanshrestha, GITUSERNAME=saiyanshrestha, GITREPOURL=https://github.com/SaiyanShrestha/raspberrypi.git, AIRFLOWPORT=9000
+[INFO 2024-11-18_19:29:17] TML Solution Studio: Docker Login Status: Error response from daemon: Get "https://registry-1.docker.io/v2/": unauthorized: incorrect username or password
+[INFO 2024-11-18_19:29:17] TML Solution Studio: Github Config Status: core.repositoryformatversion=0
+core.filemode=true
+core.bare=false
+core.logallrefupdates=true
+remote.origin.url=https://github.com/SaiyanShrestha/raspberrypi.git
+remote.origin.fetch=+refs/heads/main:refs/remotes/origin/main
+remote.origin.pushurl=https://<personal access token hidden>@github.com/saiyanshrestha/raspberrypi.git
+branch.main.remote=origin
+branch.main.merge=refs/heads/main
+[INFO 2024-11-18_19:29:17] TML Solution Studio: Github Remote Status: origin	https://github.com/SaiyanShrestha/raspberrypi.git (fetch)
+origin	https://<personal access token hidden>@github.com/saiyanshrestha/raspberrypi.git (push)
